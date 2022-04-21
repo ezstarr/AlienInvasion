@@ -64,5 +64,8 @@ class BudgieCutOut:
         if self.moving_down:
             self.rect.y += 1
 
+        if self.rect.y < 1:
+
+
     def blitme(self):
         self.screen.blit(self.image, self.rect)
