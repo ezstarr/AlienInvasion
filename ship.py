@@ -45,7 +45,9 @@ class BudgieCutOut:
         self.rect = self.image.get_rect()
 
         # start the budgie at the left
-        self.rect.center = self.screen_rect.center
+        self.rect.left = self.screen_rect.left
+        print(self.screen_rect)
+        print(self.rect)
 
         # Movement flags
         self.moving_right = False
@@ -57,15 +59,29 @@ class BudgieCutOut:
     def update(self):
         if self.moving_right:
             self.rect.x += 1
+            if self.rect.right > self.screen_rect.right:
+                self.rect.right = self.screen_rect.right
         if self.moving_left:
             self.rect.x -= 1
+            if self.rect.left < self.screen_rect.left:
+                self.rect.left = self.screen_rect.left
         if self.moving_up:
             self.rect.y -= 1
+            if self.rect.top < self.screen_rect.top:
+                self.rect.top = self.screen_rect.top
         if self.moving_down:
             self.rect.y += 1
+            if self.rect.bottom > self.screen_rect.bottom:
+                self.rect.bottom = self.screen_rect.bottom
 
-        if self.rect.y < 1:
+        # if object boundary is LESS THAN screen boundary, moving flag becomes false
+        # V update this
+       #if self.rect = self.screen_rect.left (1, -1 to -1199)
+       # if coordinate of rect = (1, -1 to -1199)
+       #  set coordingate to ()
+
 
 
     def blitme(self):
         self.screen.blit(self.image, self.rect)
+
