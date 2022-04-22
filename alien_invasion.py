@@ -36,6 +36,7 @@ class AlienInvasion:
             # Checks KEYDOWN function
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
+                print(event.type)
             # Checks KEYUP function
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
