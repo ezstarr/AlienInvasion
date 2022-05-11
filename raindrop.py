@@ -21,15 +21,26 @@ class Raindrop(Sprite):
 
         # Create self.x to be used on line 133 in alien_invasion.py
         self.x = float(self.rect.x)
+        self.y = float(self.rect.x)
 
     def check_edges(self):
-        """Return True if raindrop is at edge of screen"""
+        """Return True if raindrop.BOTTOM falls below screen"""
         screen_rect = self.screen.get_rect()
-        if self.rect.top <= screen_rect.bottom: # or self.rect.left <= 0:
+            # <rect(x, y, width, height)>
+            # screen_rect = <rect(0, 0, 1200, 800)>
+            # screen_rect.bottom = 800
+            # self.rect = <rect(50, 50, 50, 50)>
+            # self.rect.bottom = 100
+        print(self.rect)
+        print(self.rect.bottom)
+        print(screen_rect.bottom)
+        # If top of raindrop hits bottom of screen
+        if self.rect.y >= screen_rect.bottom: # or self.rect.left <= 0:
+            print("CHECK EDGES =================")
             return True
 
     def update(self):
-        """Move the alien to the right or left."""
-        self.x += (self.settings.droplets_speed * self.settings.droplet_direction)
-        self.rect.x = self.x
-        print("update")
+        """Moves raindrops down by distance of droplets_speed
+        self.y + speed"""
+        self.y += self.settings.droplets_speed
+        self.rect.y = self.y

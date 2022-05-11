@@ -15,16 +15,32 @@ class Ship:
         # Start each new ship at the bottom center of the screen.
         self.rect.midbottom = self.screen_rect.midbottom
 
-        # Movement flag
+        # Movement flags
         self.moving_right = False
         self.moving_left = False
+        self.moving_up = False
+        self.moving_down = False
+
 
     def update(self):
         """Update the ships position based on the movement flag."""
         if self.moving_right:
             self.rect.x += 1
+            if self.rect.right > self.screen_rect.right:
+                self.rect.right = self.screen_rect.right
         if self.moving_left:
             self.rect.x -= 1
+            if self.rect.left < self.screen_rect.left:
+                self.rect.left = self.screen_rect.left
+        if self.moving_up:
+            self.rect.y -= 1
+            if self.rect.top < self.screen_rect.top:
+                self.rect.top = self.screen_rect.top
+        if self.moving_down:
+            self.rect.y += 1
+            if self.rect.bottom > self.screen_rect.bottom:
+                self.rect.bottom = self.screen_rect.bottom
+
 
     def blitme(self):
             """Draw the ship at its current location."""
@@ -79,7 +95,6 @@ class BudgieCutOut:
        #if self.rect = self.screen_rect.left (1, -1 to -1199)
        # if coordinate of rect = (1, -1 to -1199)
        #  set coordingate to ()
-
 
 
     def blitme(self):

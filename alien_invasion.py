@@ -90,8 +90,6 @@ class AlienInvasion:
         self._check_fleet_edges()
         self.aliens.update()
 
-
-
     def _create_star(self, star_numberr, row_numberr):
         """Create a star, add it to the row."""
         star = Star(self)
@@ -133,9 +131,8 @@ class AlienInvasion:
         """Create a raindrop and place it in the row."""
         raindrop = Raindrop(self)
         raindrop_width, raindrop_height = raindrop.rect.size
-        raindrop.x = raindrop_width + 2 * raindrop_width * raindrop_number
-        raindrop.rect.x = raindrop.x
-        raindrop.rect.y = raindrop.rect.height + 2 * raindrop.rect.height * d_row_number
+        raindrop.rect.x = raindrop.x = raindrop_width + 2 * raindrop_width * raindrop_number
+        raindrop.y = raindrop.rect.height + 2 * raindrop.rect.height * d_row_number
         self.raindrops.add(raindrop)
 
     def _create_droplets(self):
@@ -157,18 +154,11 @@ class AlienInvasion:
                 self._create_raindrop(raindrop_number, d_row_number)
 
     def _check_droplets_edges(self):
-        """Respond appropriately if any aliens reached an edge."""
-        for raindrop in self.raindrops:
+        """Reset raindrop coordinate to 0 if check_edges returns True"""
+        for raindrop in self.raindrops.sprites():
             if raindrop.check_edges():
-                self._change_droplets_direction()
-                break
+                raindrop.rect.y = 0
 
-    def _change_droplets_direction(self):
-        """Drop entire fleet and change fleet direction."""
-        for raindrop in self.raindrops:
-            raindrop.rect.y += self.settings.droplets_fall_speed
-        print("hello")
-        self.settings.droplet_direction *= -1
 
     def _update_raindrops(self):
         """Check if fleet is at the edge,
