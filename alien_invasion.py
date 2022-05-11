@@ -4,6 +4,7 @@ from settings import Settings
 from ship import Ship, BudgieCutOut
 from bullet import Bullet
 from alien import Alien, Star
+from raindrop import Raindrop
 from random import randint
 
 
@@ -22,9 +23,11 @@ class AlienInvasion:
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
+        self.raindrops = pygame.sprite.Group()
         self._create_fleet()
         self.stars = pygame.sprite.Group()
         self._create_stargrid()
+        self._create_droplets()
 
         self.budgie = BudgieCutOut(self)
 
@@ -38,6 +41,7 @@ class AlienInvasion:
             self.budgie.update()
             self._update_screen()
             self._update_aliens()
+            self._update_raindrops()
 
     def _create_alien(self, alien_number, row_number):
         """Create an alien and place it in the row."""
@@ -68,16 +72,25 @@ class AlienInvasion:
 
     def _check_fleet_edges(self):
         """Respond appropriately if any aliens reached an edge."""
-        for alien in self.aliens.sprites():
+        for alien in self.aliens:
             if alien.check_edges():
                 self._change_fleet_direction()
                 break
 
     def _change_fleet_direction(self):
         """Drop entire fleet and change fleet direction."""
-        for alien in self.aliens.sprites():
+        for alien in self.aliens:
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
+        print("change fleet direction")
+
+    def _update_aliens(self):
+        """Check if fleet is at the edge,
+        then update the positions of all the aliens in the fleet."""
+        self._check_fleet_edges()
+        self.aliens.update()
+
+
 
     def _create_star(self, star_numberr, row_numberr):
         """Create a star, add it to the row."""
@@ -114,14 +127,56 @@ class AlienInvasion:
             for star_numberr in range(number_stars_xx):
                 self._create_star(star_numberr, row_numberr)
 
+# =========================== COPIED FROM ALIEN ==============================
 
-    def _update_aliens(self):
+    def _create_raindrop(self, raindrop_number, d_row_number):
+        """Create a raindrop and place it in the row."""
+        raindrop = Raindrop(self)
+        raindrop_width, raindrop_height = raindrop.rect.size
+        raindrop.x = raindrop_width + 2 * raindrop_width * raindrop_number
+        raindrop.rect.x = raindrop.x
+        raindrop.rect.y = raindrop.rect.height + 2 * raindrop.rect.height * d_row_number
+        self.raindrops.add(raindrop)
+
+    def _create_droplets(self):
+        """Create the grid of raindrop."""
+        # Make a raindrop.
+        raindrop = Raindrop(self)
+        raindrop_width, raindrop_height = raindrop.rect.size
+        available_space_x = self.settings.screen_width - (2 * raindrop.rect.width)
+        number_raindrop_x = available_space_x // (2 * raindrop_width)
+
+        # Determine the number of rows of aliens that fit on the screen.
+        ship_height = self.ship.rect.height
+        available_space_y = (self.settings.screen_height - (3 * raindrop_height) - ship_height)
+        number_rows = available_space_y // (2 * raindrop_height)
+
+        # Create a full fleet of aliens.
+        for d_row_number in range(number_rows):
+            for raindrop_number in range(number_raindrop_x):
+                self._create_raindrop(raindrop_number, d_row_number)
+
+    def _check_droplets_edges(self):
+        """Respond appropriately if any aliens reached an edge."""
+        for raindrop in self.raindrops:
+            if raindrop.check_edges():
+                self._change_droplets_direction()
+                break
+
+    def _change_droplets_direction(self):
+        """Drop entire fleet and change fleet direction."""
+        for raindrop in self.raindrops:
+            raindrop.rect.y += self.settings.droplets_fall_speed
+        print("hello")
+        self.settings.droplet_direction *= -1
+
+    def _update_raindrops(self):
         """Check if fleet is at the edge,
         then update the positions of all the aliens in the fleet."""
-        self._check_fleet_edges()
-        self.aliens.update()
+        self._check_droplets_edges()
+        self.raindrops.update()
 
-
+# ================ END OF COPY=================
 
     def _check_events(self):
         """Respond to key-presses and mouse events."""
@@ -190,6 +245,7 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+        self.raindrops.draw(self.screen)
         # self.stars.draw(self.screen)
         # self.budgie.blitme()
         # Make the most recently drawn screen visible.
