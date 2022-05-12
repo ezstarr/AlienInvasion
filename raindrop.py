@@ -1,5 +1,6 @@
 import pygame
 from pygame.sprite import Sprite
+import random
 
 
 class Raindrop(Sprite):
@@ -10,6 +11,7 @@ class Raindrop(Sprite):
         # Initializes game settings
         self.screen = ai_game.screen
         self.settings = ai_game.settings
+        self.falling_speed_offset = random.uniform(-.3, 0.3)
 
         # Initializes raindrop image
         self.image = pygame.image.load('images/raindrop.png')
@@ -39,5 +41,5 @@ class Raindrop(Sprite):
     def update(self):
         """Moves raindrops down by distance of droplets_speed
         self.y + speed"""
-        self.y += self.settings.droplets_speed
+        self.y += self.settings.droplets_speed + self.falling_speed_offset
         self.rect.y = self.y

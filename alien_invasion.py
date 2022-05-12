@@ -6,6 +6,7 @@ from bullet import Bullet
 from alien import Alien, Star
 from raindrop import Raindrop
 from random import randint
+import random
 
 
 class AlienInvasion:
@@ -75,6 +76,7 @@ class AlienInvasion:
         for alien in self.aliens:
             if alien.check_edges():
                 self._change_fleet_direction()
+                print("change fleet direction")
                 break
 
     def _change_fleet_direction(self):
@@ -131,8 +133,8 @@ class AlienInvasion:
         """Create a raindrop and place it in the row."""
         raindrop = Raindrop(self)
         raindrop_width, raindrop_height = raindrop.rect.size
-        raindrop.rect.x = raindrop.x = raindrop_width + 2 * raindrop_width * raindrop_number
-        raindrop.y = raindrop.rect.height + 2 * raindrop.rect.height * d_row_number
+        raindrop.rect.x = randint(-30, 30) + ((2 * raindrop_width) * raindrop_number)
+        raindrop.y = randint(-30, 30) + ((2 * raindrop.rect.height) * d_row_number)
         self.raindrops.add(raindrop)
 
     def _create_droplets(self):
@@ -157,8 +159,9 @@ class AlienInvasion:
         """Reset raindrop coordinate to 0 if check_edges returns True"""
         for raindrop in self.raindrops.sprites():
             if raindrop.check_edges():
-                raindrop.y = - raindrop.rect.height
-
+                raindrop.y = - raindrop.rect.height + randint(-30, 130)
+                raindrop.x = raindrop.x + randint(-30, 130)
+                raindrop.falling_speed_offset = random.uniform(-0.3, 0.3)
 
     def _update_raindrops(self):
         """Check if fleet is at the edge,
@@ -196,7 +199,6 @@ class AlienInvasion:
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
 
-
     def _check_keyup_events(self, event):
         """Respond to key releases"""
         if event.key == pygame.K_RIGHT:
@@ -208,13 +210,11 @@ class AlienInvasion:
         elif event.key == pygame.K_DOWN:                
             self.ship.moving_down = False
 
-
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
-
 
     def _update_bullets(self):
         """Update position of bullets and get rid of old bullets."""
@@ -225,7 +225,6 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
-
     def _update_screen(self):
         """Redraws the screen during each pass through the loop"""
         self.screen.fill(self.settings.bg_color)
@@ -235,7 +234,7 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
-        self.raindrops.draw(self.screen)
+        # self.raindrops.draw(self.screen)
         # self.stars.draw(self.screen)
         # self.budgie.blitme()
         # Make the most recently drawn screen visible.
