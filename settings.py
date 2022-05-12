@@ -1,3 +1,5 @@
+from random import randint
+
 class Settings:
     """A class to store all settings for Alien Invasion."""
 
@@ -18,10 +20,17 @@ class Settings:
         self.bullets_allowed = 3
 
         # Alien settings
-        self.alien_speed = 1.0
-        self.fleet_drop_speed = 10
+        self.alien_speed = .50
+        self.fleet_drop_speed = 20
         # fleet_direction | 1 is right, -1 is left
         self.fleet_direction = 1
+
+        # Raindrop settings 13.3
+        self.droplets_speed = .50
+        self.droplets_fall_speed = randint(1, 3)
+        self.droplet_direction = 1
+
+
 
 
 
