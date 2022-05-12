@@ -157,7 +157,7 @@ class AlienInvasion:
         """Reset raindrop coordinate to 0 if check_edges returns True"""
         for raindrop in self.raindrops.sprites():
             if raindrop.check_edges():
-                raindrop.rect.y = 0
+                raindrop.y = - raindrop.rect.height
 
 
     def _update_raindrops(self):

@@ -21,7 +21,7 @@ class Raindrop(Sprite):
 
         # Create self.x to be used on line 133 in alien_invasion.py
         self.x = float(self.rect.x)
-        self.y = float(self.rect.x)
+        self.y = float(self.rect.y)
 
     def check_edges(self):
         """Return True if raindrop.BOTTOM falls below screen"""
@@ -31,9 +31,6 @@ class Raindrop(Sprite):
             # screen_rect.bottom = 800
             # self.rect = <rect(50, 50, 50, 50)>
             # self.rect.bottom = 100
-        print(self.rect)
-        print(self.rect.bottom)
-        print(screen_rect.bottom)
         # If top of raindrop hits bottom of screen
         if self.rect.y >= screen_rect.bottom: # or self.rect.left <= 0:
             print("CHECK EDGES =================")
