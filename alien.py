@@ -33,22 +33,3 @@ class Alien(Sprite):
         self.x += (self.settings.alien_speed * self.settings.fleet_direction)
         self.rect.x = self.x
         print("alien-update")
-
-class Star(Sprite):
-    """Exercise 13.1 - create a grid of stars"""
-    def __init__(self, ai_game):
-        """Initialize and position first star"""
-        super().__init__()
-        self.screen = ai_game.screen
-
-        # Load star image and set rect attribute.
-        self.image = pygame.image.load('images/star.png').convert_alpha()
-        self.rect = self.image.get_rect()
-
-        # Position each star
-        self.rect.x = self.rect.width
-        self.rect.y = self.rect.height
-
-        # Store the star's x-coordinate(horizontal position)
-        self.x = float(self.rect.x)
-
