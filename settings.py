@@ -9,7 +9,6 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (20, 20, 80)
-        self.ship_speed = 1.5
         self.budgie_speed = 1.5
 
         # Bullet settings
@@ -29,6 +28,10 @@ class Settings:
         self.droplets_speed = .50
         self.droplets_fall_speed = randint(1, 3)
         self.droplet_direction = 1
+
+        # Ship settings
+        self.ship_speed = 1.5
+        self.ship_limit = 3
 
 
 
