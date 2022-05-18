@@ -6,5 +6,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="SpeechRecognition" />
     <orderEntry type="module" module-name="Flask Website" />
+    <orderEntry type="module" module-name="CodewarsSolutions" />
   </component>
 </module>

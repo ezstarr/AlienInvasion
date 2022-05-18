@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Chapter 12.iml" filepath="$PROJECT_DIR$/.idea/Chapter 12.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../CodewarsSolutions/.idea/CodewarsSolutions.iml" filepath="$PROJECT_DIR$/../../CodewarsSolutions/.idea/CodewarsSolutions.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../SpeechRecognition/.idea/SpeechRecognition.iml" filepath="$PROJECT_DIR$/../../SpeechRecognition/.idea/SpeechRecognition.iml" />
     </modules>
   </component>
