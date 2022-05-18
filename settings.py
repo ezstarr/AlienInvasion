@@ -24,14 +24,29 @@ class Settings:
         # fleet_direction | 1 is right, -1 is left
         self.fleet_direction = 1
 
-        # Raindrop settings 13.3
-        self.droplets_speed = .50
-        self.droplets_fall_speed = randint(1, 3)
-        self.droplet_direction = 1
-
         # Ship settings
-        self.ship_speed = 1.5
         self.ship_limit = 3
+
+        # How quickly the game speeds up
+        self.speedup_scale = 1.1
+
+        self.initialize_dynamic_settings()
+
+    def initialize_dynamic_settings(self):
+        """Initialize settings that change throughout the game"""
+        self.ship_speed = 1.5
+        self.bullet_speed = 3.0
+        self.alien_speed = 1.0
+
+        # fleet_direction of 1 represents right; -1 represent left.
+        self.fleet_direction = 1
+
+    def increase_speed(self):
+        """Increase speed settings"""
+        self.ship_speed *= self.speedup_scale
+        self.alien_speed *= self.speedup_scale
+        self.bullet_speed *= self.speedup_scale
+
 
 
 

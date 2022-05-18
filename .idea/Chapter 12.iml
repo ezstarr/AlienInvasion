@@ -7,5 +7,7 @@
     <orderEntry type="module" module-name="SpeechRecognition" />
     <orderEntry type="module" module-name="Flask Website" />
     <orderEntry type="module" module-name="CodewarsSolutions" />
+    <orderEntry type="module" module-name="TimeEnjoyed_Twitch_Bot" />
+    <orderEntry type="module" module-name="timeenjoyeddiscordbot" />
   </component>
 </module>
