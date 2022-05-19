@@ -83,7 +83,6 @@ class AlienInvasion:
         for alien in self.aliens:
             if alien.check_edges():
                 self._change_fleet_direction()
-                print("change fleet direction")
                 break
 
     def _change_fleet_direction(self):
@@ -91,7 +90,6 @@ class AlienInvasion:
         for alien in self.aliens:
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
-        print("change fleet direction")
 
     def _update_aliens(self):
         """Check if fleet is at the edge,
@@ -102,6 +100,7 @@ class AlienInvasion:
         # Look for alien-ship collisions.
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             self._ship_hit()
+
 
         # Look for aliens hitting the bottom of the screen.
         self._check_aliens_bottom()
@@ -174,6 +173,7 @@ class AlienInvasion:
             # Reset the game statistics.
             self.stats.reset_stats()
             self.stats.game_active = True
+            self.sb.prep_score()
 
             # start game
             self._start_game()
@@ -232,15 +232,28 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
-        # Check for any bullets that have hit aliens.
-        # If so, get rid of the bullet and add the alien.
-        # compares positions of arg 1 & 2. True tells pygame to delete the bullets and aliens.
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
+        """Respond to bullet-alien collisions."""
 
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, False, True)
+
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
+            self.sb.prep_score()
+            self.sb.check_high_score()
+
+            print(f"collisions looks like this: {collisions}")
+
+
         if not self.aliens:
             # Destroy existing bullets and create a new fleet.
             self.bullets.empty()
             self._create_fleet()
+            self.settings.increase_speed()
+
 
 # UPDATE SCREEN
 

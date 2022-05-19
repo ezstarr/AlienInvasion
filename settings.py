@@ -9,7 +9,9 @@ class Settings:
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (20, 20, 80)
-        self.budgie_speed = 1.5
+
+        #How quickly the game speeds up:
+        self.speedup_scale = 1.1
 
         # Bullet settings
         self.bullet_speed = 1.0
@@ -32,6 +34,12 @@ class Settings:
 
         self.initialize_dynamic_settings()
 
+        # Scoring
+        self.alien_points = 50
+
+        # How quickly the alien point values increase
+        self.score_scale = 1.5
+
     def initialize_dynamic_settings(self):
         """Initialize settings that change throughout the game"""
         self.ship_speed = 1.5
@@ -46,6 +54,9 @@ class Settings:
         self.ship_speed *= self.speedup_scale
         self.alien_speed *= self.speedup_scale
         self.bullet_speed *= self.speedup_scale
+
+        self.alien_points = int(self.alien_points * self.score_scale)
+
 
 
 
